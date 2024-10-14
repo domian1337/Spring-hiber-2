@@ -1,23 +1,23 @@
 package web.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.ui.ModelMap;
-
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import web.service.*;
 
 @Controller
 public class CarController {
 
-    @GetMapping ("/cars")
-    public String cars(ModelMap model) {
-        List<String> messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("I'm a Car");
-        messages.add("ford mustang ");
-        model.addAttribute("messages", messages);
+    private final CarService carService;
+
+    public CarController(CarService carService) {
+        this.carService = carService;
+    }
+
+    @GetMapping("/cars")
+    public String getCars (@RequestParam(value = "count", defaultValue = "5") int count, Model model) {
+        model.addAttribute("view", "Table car");
+        model.addAttribute("cars", carService.getCars(count));
         return "cars";
     }
 }

@@ -1,12 +1,22 @@
 package web.model;
 
+import org.springframework.stereotype.Controller;
+
+import java.util.*;
+
+
 public class Car {
 
     private String make;
-
     private String model;
-
     private int year;
+
+
+    public Car(String make, String model, int year) {
+        this.make = make;
+        this.model = model;
+        this.year = year;
+    }
 
     public int getYear() {
         return year;
@@ -39,7 +49,14 @@ public class Car {
 
     @Override
     public boolean equals(Object obj) {
-
+        if (this == obj) {
+            return true;
+        }
+        if (obj instanceof Car && obj.getClass() == this.getClass()) {
+            Car car = (Car) obj;
+            return car.getMake().equals(this.getMake()) && car.getModel().equals(this.getModel()) && car.getYear() == this.getYear();
+        }
+        return false;
     }
 
     @Override
